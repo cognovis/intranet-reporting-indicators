@@ -84,21 +84,21 @@ ad_form -extend -name $form_id \
 			'[ad_conn peeraddr]',
 			null,
 
-			:indicator_name,
-			:indicator_code,
+			:report_name,
+			:report_code,
 			[im_report_type_indicator],
 			[im_report_status_active],
 			:report_sql::text,
 
-			:indicator_min::double precision,
-			:indicator_max::double precision,
-			:indicator_bins::integer
+			:indicator_widget_min::double precision,
+			:indicator_widget_max::double precision,
+			:indicator_widget_bins::integer
 		)
         "
 
 	db_dml edit_report "
 		update im_reports set 
-			report_description = :indicator_description
+			report_description = :report_description
 		where report_id = :indicator_id
 	"
 

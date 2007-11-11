@@ -122,7 +122,7 @@ end;' language 'plpgsql';
 
 create or replace function im_indicator__new (
 	integer, varchar, timestamptz, integer, varchar, integer,
-	varchar, varchar, integer, integer, integer, text,
+	varchar, varchar, integer, integer, text,
 	double precision, double precision, integer
 ) returns integer as '
 DECLARE
@@ -156,11 +156,11 @@ BEGIN
 	);
 
 	insert into im_reports (
-		indicator_id, indicator_name,
-		indicator_type_id, indicator_status_id,
-		indicator_menu_id, indicator_sql
+		report_id, report_name, report_code,
+		report_type_id, report_status_id,
+		report_menu_id, report_sql
 	) values (
-		v_indicator_id, p_indicator_name,
+		v_indicator_id, p_indicator_name, p_indicator_code,
 		p_indicator_type_id, p_indicator_status_id,
 		null, p_indicator_sql
 	);
