@@ -24,6 +24,7 @@
 	<td>
 		<ul>
 		<li><a href=new>Add a new Indicator</a>
+		<li><a href=compare>Compare yourself with other companies</a>
 		</ul>
 	</td>
 	</tr>

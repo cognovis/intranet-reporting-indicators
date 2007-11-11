@@ -15,7 +15,7 @@ ad_page_contract {
     @author frank.bergmann@project-open.com
 } {
     report_id:integer,optional
-    {return_url "/intranet-reporting/index"}
+    {return_url "/intranet-reporting-indicators/index"}
 }
 
 
