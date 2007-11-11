@@ -101,6 +101,38 @@ ad_proc im_indicator_timeline_widget {
 	set last_v $v
     }
 
+    set hist_html ""
+    if {[llength $histogram_values] > 0} {
+
+	# For the v-size of the bar just divide the diagram space by the number of bins.
+	# We asume that the histogram data are calculated correctly within the range of the diagram...
+	set bar_height [expr ($diagram_height - $outer_distance - $bottom_distance) / [llength $histogram_values] - 2]
+	
+	foreach v $histogram_values {
+	    
+	    set vy [lindex $v 0]
+	    set vperc [lindex $v 1]
+	    
+	    # Display the percent text in an invisible bar
+	    append hist_html "
+		var left_x = 3 + $oname.ScreenX(Date.UTC($year9, $month9, $day9, $hour9, $min9, $sec9));
+		var right_x = left_x + 20;
+		var bot_y = $oname.ScreenY($vy);
+		var top_y = bot_y - $bar_height;
+                new Bar(left_x, top_y, right_x, bot_y, \"\", \"${vperc}%\", \"$diagram_color\");
+            "
+
+	    # Draw the bar
+	    append hist_html "
+		var left_x = 30 + $oname.ScreenX(Date.UTC($year9, $month9, $day9, $hour9, $min9, $sec9));
+		var right_x = left_x + $vperc;
+		var bot_y = $oname.ScreenY($vy);
+		var top_y = bot_y - $bar_height;
+                new Bar(left_x, top_y, right_x, bot_y, \"#0080FF\", \"&nbsp;\", \"#000000\");
+            "
+	}
+    }
+
     set y_grid_delta [expr ($widget_max - $widget_min) / $widget_bins]
     set y_grid_delta [im_diagram_round_to_next_nice_number $y_grid_delta]
 
@@ -135,9 +167,12 @@ ad_proc im_indicator_timeline_widget {
 	$oname.Draw(\"\", \"$diagram_color\", false);
 	$oname.SetText(\"\",\"\", \"<B>$name</B>\");
 	$diagram_html
+	$hist_html
 	document.close();
 	</SCRIPT>
 	</div>
     "
+
+    return $histogram_html
 }
 
