@@ -25,8 +25,11 @@ ad_page_contract {
 # Defaults & Security
 # ------------------------------------------------------
 
-set current_user_id [ad_maybe_redirect_for_registration]
+# set current_user_id [ad_maybe_redirect_for_registration]
+set current_user_id 624
+
 set user_admin_p [im_is_user_site_wide_or_intranet_admin $current_user_id]
+
 if {"" == $return_url} { set return_url [ad_conn url] }
 set page_title [lang::message::lookup "" intranet-reporting.Indicators "Indicators"]
 set context_bar [im_context_bar $page_title]
