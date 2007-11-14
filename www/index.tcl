@@ -125,7 +125,7 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 			select	avg(result) as result,
 				result_indicator_id
 			from	im_indicator_results
-			where	result_date >= now() - '1 second'::interval
+			where	result_date >= now() - '1 hour'::interval
 			group by result_indicator_id
 		) ir ON (i.indicator_id = ir.result_indicator_id)
 	where
