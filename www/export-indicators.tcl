@@ -73,6 +73,10 @@ BEGIN
 		indicator_section_id = $indicator_section_id
 	where indicator_id = v_id;
 
+	update im_reports set
+		report_description = ''$report_description''
+	where indicator_id = v_id;
+
         return 0;
 end;' language 'plpgsql';
 select inline_0 ();
