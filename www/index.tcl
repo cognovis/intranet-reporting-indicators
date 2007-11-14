@@ -153,15 +153,16 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 	
 	set result "error"
 	set error_occured [catch {
+
 	    set result [db_string value $report_sql]
-	    
-	    # Randomize a bit to get nice demo data
-#	    set result [expr $result * (1 + (rand()+0.5) / 20)]
+
 	} err_msg]
 	if {$error_occured} { 
 	    set report_description "<pre>$err_msg</pre>" 
 	} else {
-	    db_dml insert "
+
+	    if {"" != $result} {
+		db_dml insert "
 				insert into im_indicator_results (
 					result_id,
 					result_indicator_id,
@@ -173,14 +174,16 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 					now(),
 					:result
 				)
-	    "
+	        "
+	    }
+
 	}
     }	
     
     set value_html $result
     set history_html ""
 
-    if {"error" != $result} {
+    if {"error" != $result && "" != $result} {
 
 	set indicator_sql "
 	        select	result_date, result
