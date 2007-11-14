@@ -41,6 +41,12 @@ set context ""
 # ------------------------------------------------------
 
 set elements_list {
+    section {
+	label "Section"
+	display_template {
+	    @reports.section@
+	}
+    }
     name {
 	label $page_title
 	display_template {
@@ -110,6 +116,7 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 	select
 		r.*,
 		i.*,
+		im_category_from_id(i.indicator_section_id) as section,
 		ir.result
 	from
 		im_reports r,
@@ -125,6 +132,7 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 		r.report_id = i.indicator_id and
 		r.report_type_id = [im_report_type_indicator]
 	order by 
+		section,
 		report_sort_order
 " {
     set report_view_url [export_vars -base "view" {indicator_id return_url}]
@@ -138,7 +146,7 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 	    set result [db_string value $report_sql]
 	    
 	    # Randomize a bit to get nice demo data
-	    set result [expr $result * (1 + (rand()+0.5) / 20)]
+#	    set result [expr $result * (1 + (rand()+0.5) / 20)]
 	} err_msg]
 	if {$error_occured} { 
 	    set report_description "<pre>$err_msg</pre>" 
@@ -160,32 +168,37 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
     }	
     
     set value_html $result
+    set history_html ""
 
-    set indicator_sql "
-        select	result_date, result
-        from	im_indicator_results
-        where	result_indicator_id = :report_id
-        order by result_date
-    "
-    set values [db_list_of_lists results $indicator_sql]
+    if {"error" != $result} {
 
-    set min $indicator_widget_min
-    if {"" == $min} { set min 1000000 }
-    set max $indicator_widget_max
-    if {"" == $max} { set max -1000000 }
-
-    foreach vv $values { 
-	set v [lindex $vv 1]
-	if {$v < $min} { set min $v }
-	if {$v > $max} { set max $v }
-    }
-
-    set history_html [im_indicator_timeline_widget \
+	set indicator_sql "
+	        select	result_date, result
+	        from	im_indicator_results
+	        where	result_indicator_id = :report_id
+	        order by result_date
+        "
+	set values [db_list_of_lists results $indicator_sql]
+	
+	set min $indicator_widget_min
+	if {"" == $min} { set min 1000000 }
+	set max $indicator_widget_max
+	if {"" == $max} { set max -1000000 }
+	
+	foreach vv $values { 
+	    set v [lindex $vv 1]
+	    if {$v < $min} { set min $v }
+	    if {$v > $max} { set max $v }
+	}
+	
+	set history_html ""
+	set history_html [im_indicator_timeline_widget \
 			  -name $report_name \
 			  -values $values \
 			  -widget_min $min \
 			  -widget_max $max \
-    ]
+        ]
+    }
 
 }
 

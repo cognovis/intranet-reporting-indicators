@@ -16,6 +16,7 @@ ad_page_contract {
 } {
     indicator_id:integer,optional
     {return_url "/intranet-reporting-indicators/index"}
+    { indicator_widget_bins 5 }
     {form_mode "edit"}
 }
 
@@ -52,11 +53,9 @@ ad_form \
 	indicator_id:key
 	{report_name:text(text) {label "[lang::message::lookup {} intranet-reporting.Indicator_Name {Indicator Name}]"} {html {size 60}}}
 	{report_code:text(text) {label "[lang::message::lookup {} intranet-reporting.Indicator_Code {Indicator Code}]"} {html {size 10}}}
-
+	{indicator_section_id:text(im_category_tree),optional {label "[lang::message::lookup {} intranet-reporting.Indicator_Section {Section}]"} {custom {category_type "Intranet Indicator Section" translate_p 1}} }
 	{indicator_widget_min:text(text) {label "[lang::message::lookup {} intranet-reporting.Indicator_Widget_Min {Widget Min}]"} {html {size 10}}}
 	{indicator_widget_max:text(text) {label "[lang::message::lookup {} intranet-reporting.Indicator_Widget_Max {Widget Max}]"} {html {size 10}}}
-	{indicator_widget_bins:integer(text) {label "[lang::message::lookup {} intranet-reporting.Indicator_Widget_Bins {Widget Bins}]"} {html {size 10}}}
-
 	{report_sql:text(textarea) {label "[lang::message::lookup {} intranet-reporting.Reports_SQL {Report SQL}]"} {html {cols 60 rows 10} }}
 	{report_description:text(textarea),optional {label "[lang::message::lookup {} intranet-reporting.Reports_Description {Description}]"} {html {cols 60 rows 4} }}
     }
@@ -102,6 +101,12 @@ ad_form -extend -name $form_id \
 		where report_id = :indicator_id
 	"
 
+	db_dml edit_indicator "
+		update im_indicators set 
+			indicator_section_id = :indicator_section_id
+		where indicator_id = :indicator_id
+	"
+
     } -edit_data {
 
 	db_dml edit_report "
@@ -120,7 +125,8 @@ ad_form -extend -name $form_id \
 		update im_indicators set 
 			indicator_widget_min = :indicator_widget_min::double precision,
 			indicator_widget_max = :indicator_widget_max::double precision,
-			indicator_widget_bins = :indicator_widget_bins::integer
+			indicator_widget_bins = :indicator_widget_bins::integer,
+			indicator_section_id = :indicator_section_id
 		where indicator_id = :indicator_id
 	"
 

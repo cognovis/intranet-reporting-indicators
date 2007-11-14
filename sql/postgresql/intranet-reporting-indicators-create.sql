@@ -46,6 +46,10 @@ create table im_indicators (
 				primary key
 				constraint im_indicator_id_fk
 				references im_reports,
+	indicator_section_id	integer
+				constraint im_indicator_section_fk
+				references im_categories,
+
 	-- Lower widget scale
 	indicator_widget_min	double precision,
 	-- Upper widget scale
@@ -194,3 +198,30 @@ BEGIN
 	return 0;
 end;' language 'plpgsql';
 
+
+
+
+----------------------------------------------------------
+-- Indicator Sections
+--
+-- These are a hierarchical list of areas in the company
+
+-- 15200-15299  Intranet Indicator Section
+
+select im_category_new (15200, 'Financial Management', 'Intranet Indicator Section');
+select im_category_new (15205, 'Customer Management', 'Intranet Indicator Section');
+select im_category_new (15210, 'Project Management', 'Intranet Indicator Section');
+select im_category_new (15215, 'Timesheet Management', 'Intranet Indicator Section');
+select im_category_new (15220, 'Translation Provider Management', 'Intranet Indicator Section');
+select im_category_new (15225, 'Translation Project Management', 'Intranet Indicator Section');
+select im_category_new (15230, 'Knowledge Management', 'Intranet Indicator Section');
+select im_category_new (15235, 'Human Resources Management', 'Intranet Indicator Section');
+select im_category_new (15240, 'Other', 'Intranet Indicator Section');
+select im_category_new (15245, 'System Usage', 'Intranet Indicator Section');
+
+
+create or replace view im_indicator_sections as
+select  category_id as section_id, category as section
+from    im_categories
+where   category_type = 'Intranet Indicator Section'
+        and (enabled_p is null or enabled_p = 't');
