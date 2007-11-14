@@ -23,7 +23,9 @@
 	<tr>
 	<td>
 		<ul>
+<if @add_reports_p@>
 		<li><a href=new>Add a new Indicator</a>
+</if>
 <!--
 		<li><a href=compare>Compare yourself with other companies</a>
 -->

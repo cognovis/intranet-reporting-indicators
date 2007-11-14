@@ -23,8 +23,17 @@ ad_page_contract {
 set user_id [ad_maybe_redirect_for_registration]
 set page_title [lang::message::lookup "" intranet-reporting.New_Indicator "New Indicator"]
 set context [im_context_bar $page_title]
-
 set action_url "/intranet-reporting-indicators/new"
+
+set add_reports_p [im_permission $user_id "add_reports"]
+if {!$add_reports_p} {
+    im_security_alert \
+	-location "/intranet-reporting-indicators/new" \
+	-message "User trying to modify an indicator"
+
+    ad_return_complaint 1 "You don't have permissions to see this screen"
+    ad_script_abort
+}
 
 
 # ---------------------------------------------------------------

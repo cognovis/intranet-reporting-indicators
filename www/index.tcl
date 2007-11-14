@@ -25,10 +25,10 @@ ad_page_contract {
 # Defaults & Security
 # ------------------------------------------------------
 
-# set current_user_id [ad_maybe_redirect_for_registration]
-set current_user_id 624
-
+set current_user_id [ad_maybe_redirect_for_registration]
 set user_admin_p [im_is_user_site_wide_or_intranet_admin $current_user_id]
+set add_reports_p [im_permission $current_user_id "add_reports"]
+set view_reports_all_p [im_permission $current_user_id "view_reports_all"]
 
 if {"" == $return_url} { set return_url [ad_conn url] }
 set page_title [lang::message::lookup "" intranet-reporting.Indicators "Indicators"]
@@ -55,7 +55,7 @@ set elements_list {
     }
 }
 
-if {$user_admin_p} {
+if {$add_reports_p} {
     lappend elements_list \
 	edit {
 	    label "[im_gif wrench]"
@@ -112,6 +112,9 @@ db_foreach history $history_sql {
 }
 
 
+set permission_sql "and 't' = im_object_permission_p(r.report_id, :current_user_id, 'read')"
+if {$view_reports_all_p} { set permission_sql "" }
+
 db_multirow -extend {report_view_url edit_html value_html history_html} reports get_reports "
 	select
 		r.*,
@@ -131,13 +134,18 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 	where
 		r.report_id = i.indicator_id and
 		r.report_type_id = [im_report_type_indicator]
+		$permission_sql
 	order by 
 		section,
 		report_sort_order
 " {
     set report_view_url [export_vars -base "view" {indicator_id return_url}]
     set report_edit_url [export_vars -base "new" {indicator_id}]
-    set edit_html "<a href='$report_edit_url'>[im_gif "wrench"]</a>"
+    set perms_url [export_vars -base "perms" {{object_id $indicator_id}}]
+    set edit_html "
+	<a href='$report_edit_url'>[im_gif "wrench"]</a>
+	<a href='$perms_url'>[im_gif "lock"]</a>
+    "
     
     if {"" == $result} {
 	
