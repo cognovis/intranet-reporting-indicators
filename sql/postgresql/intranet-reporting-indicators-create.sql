@@ -184,6 +184,10 @@ returns integer as '
 DECLARE
 	p_indicator_id	alias for $1;
 BEGIN
+	-- Delete any results for this indicator
+	delete from im_indicator_results
+	where	result_indicator_id = p_indicator_id;
+
 	-- Delete any data related to the object
 	delete from im_indicators
 	where	indicator_id = p_indicator_id;
