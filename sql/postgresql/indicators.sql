@@ -30,7 +30,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Actually counts the number of main projects (no subprojects) starting in the last 30 days.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -71,7 +71,7 @@ where
 
 	update im_reports set
 		report_description = ''Counts how many customer objects have been created in the last 30 days. However, this indicator doesn''''t say whether these new customers have generated any revenues.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -107,7 +107,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Counts the days ]po[ is in operations, starting with the start_date of the first project.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -143,7 +143,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Counts the number of forum items created in the last 30 days.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -183,7 +183,7 @@ p.end_date < now()'',
 
 	update im_reports set
 		report_description = ''Counts the number of open projects with an end date earlier then now.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -224,7 +224,7 @@ where start_date > now()::date-30
 
 	update im_reports set
 		report_description = ''Counts the number of customers with projects in the last 30 days.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -273,7 +273,7 @@ group by parent.project_id) t
 
 	update im_reports set
 		report_description = ''Counts how many financial documents (quotes, pos, invoices, bills, deliver notes or expense invoices) have been generated for all main projects that ended (end_date) 30 days ago to 60 days ago.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -309,7 +309,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -345,7 +345,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Invoices written with effective date between 30 days and 60 days ago.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -384,7 +384,7 @@ project_status_id = 76'',
 
 	update im_reports set
 		report_description = ''Counts the number of main projects with status ''''open''''.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -424,7 +424,7 @@ where   project_status_id in (select * from im_sub_categories(76))
 
 	update im_reports set
 		report_description = ''Calculates the average duration (end_date - start_date) in days of all currently open projects.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -460,7 +460,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Provider bills with effective date between 30 days ago and 60 days ago.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -507,7 +507,7 @@ where   e.employee_id in (select member_id from group_distinct_member_map where 
 
 	update im_reports set
 		report_description = ''Counts the number of sick days per full-time employee (using the ''''availability'''' field of the Employee)''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -552,7 +552,7 @@ where   e.employee_id in (select member_id from group_distinct_member_map where 
 
 	update im_reports set
 		report_description = ''Calculates the number of hours logged two month ago (now-60days - now-30days) divided by the number of full time employees (member of group employee multiplied with their ''''availability'''').''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -593,7 +593,7 @@ where start_date > now()::date-30 and start_date <= now()::date) * 1.0 /
 
 	update im_reports set
 		report_description = ''Counts how many projects each PM has started in the last 30 days.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -633,7 +633,7 @@ gm.group_id = (select group_id from groups where group_name = ''''Employees'''')
 
 	update im_reports set
 		report_description = ''Counts all members of group ''''Employees''''.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -686,7 +686,7 @@ from
 
 	update im_reports set
 		report_description = ''Returns the average time (in days) the currently active Employees stay in the company (employee end_date - start_date).''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -739,7 +739,7 @@ from    (
 
 	update im_reports set
 		report_description = ''Shows the average number of hours logged per project, for all projects not yet finished (the project''''s end date in the future)''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -788,7 +788,7 @@ from
 
 	update im_reports set
 		report_description = ''Calculates ((Invoices - Bills - Timesheet - Expenses) / Invoices) of all financial documents between now-30 days and now-60 days.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -829,7 +829,7 @@ where   p.project_id = t.object_id and
 
 	update im_reports set
 		report_description = ''Counts the number of forum items posted in the last 30 days.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -877,7 +877,7 @@ from
 
 	update im_reports set
 		report_description = ''Calculates ((Quotes - POs) / Quotes) of all financial documents effective between now-30 and now-60 (the 2nd last month).''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -922,7 +922,7 @@ from    (
 
 	update im_reports set
 		report_description = ''Counts the number of currently open projects and divides by the number of its project managers.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -958,7 +958,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Counts how many different PMs are dealing with the currently open projects.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
@@ -1011,7 +1011,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''Calculates how many percent of timesheet hours are logged on customer projects vs. ''''internal'''' projects.''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';

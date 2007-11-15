@@ -44,7 +44,13 @@ set indicator_sql "
 
 db_foreach indicators $indicator_sql {
 
-    if {"" = $indicator_section_id} { set indicator_section_id "NULL" }
+    # Quote the text strings for SQL
+    regsub -all {'} $report_sql "''''" report_sql
+    regsub -all {'} $report_name "''''" report_name
+    regsub -all {'} $report_description "''''" report_description
+
+    # Set specific NULL, otherwise we get a syntax error
+    if {"" == $indicator_section_id} { set indicator_section_id "NULL" }
 
     append ddl "
 create or replace function inline_0 ()
@@ -75,7 +81,7 @@ BEGIN
 
 	update im_reports set
 		report_description = ''$report_description''
-	where indicator_id = v_id;
+	where report_id = v_id;
 
         return 0;
 end;' language 'plpgsql';
