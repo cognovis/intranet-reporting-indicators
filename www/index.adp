@@ -1,11 +1,10 @@
-<master src="../../intranet-core/www/master">
+<master src="../../intranet-core/www/po-master">
 <property name="context">@context;noquote@</property>
 <property name="title">@page_title@</property>
 <property name="main_navbar_label">reporting</property>
-
-
-<SCRIPT Language=JavaScript src=/resources/diagram/diagram/diagram.js></SCRIPT>
-
+<property name="header_stuff">
+   <script language="JavaScript" type="text/javascript" src="/resources/diagram/diagram/diagram.js"></script>
+</property>
 
 <table cellspacing=0 cellpadding=0 width="100%">
     <tr valign=top>
