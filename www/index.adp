@@ -1,7 +1,7 @@
 <master src="../../intranet-core/www/po-master">
 <property name="context">@context;noquote@</property>
 <property name="title">@page_title@</property>
-<property name="main_navbar_label">reporting</property>
+<property name="main_navbar_label">indicators</property>
 <property name="header_stuff">
    <script language="JavaScript" type="text/javascript" src="/resources/diagram/diagram/diagram.js"></script>
 </property>
