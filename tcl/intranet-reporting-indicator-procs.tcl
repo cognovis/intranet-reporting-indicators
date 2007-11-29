@@ -162,6 +162,7 @@ ad_proc im_indicator_timeline_widget {
 
 	$oname.GetXGrid();
 	$oname.XGridDelta=$oname.XGrid\[1\]*3;
+	$oname.XGridDelta=$oname.XGrid\[1\];
 	$oname.YGridDelta=$y_grid_delta;
 
 	$oname.Draw(\"\", \"$diagram_color\", false);

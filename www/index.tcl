@@ -26,6 +26,9 @@ set page_title [lang::message::lookup "" intranet-reporting.Indicators "Indicato
 set context_bar [im_context_bar $page_title]
 set context ""
 
+# Evaluate indicators every X hours:
+set eval_interval_hours [parameter::get_from_package_key -package_key "intranet-reporting-indicators" -parameter "IndicatorEvaluationIntervalHours" -default 24]
+set eval_interval_hours 0
 
 # ------------------------------------------------------
 # List creation
@@ -119,7 +122,7 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 			select	avg(result) as result,
 				result_indicator_id
 			from	im_indicator_results
-			where	result_date >= now() - '1 second'::interval
+			where	result_date >= now() - '$eval_interval_hours hours'::interval
 			group by result_indicator_id
 		) ir ON (i.indicator_id = ir.result_indicator_id)
 	where
