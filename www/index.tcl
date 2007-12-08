@@ -28,7 +28,6 @@ set context ""
 
 # Evaluate indicators every X hours:
 set eval_interval_hours [parameter::get_from_package_key -package_key "intranet-reporting-indicators" -parameter "IndicatorEvaluationIntervalHours" -default 24]
-set eval_interval_hours 0
 
 # ------------------------------------------------------
 # List creation
