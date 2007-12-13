@@ -129,8 +129,7 @@ db_multirow -extend {report_view_url edit_html value_html history_html} reports 
 		r.report_type_id = [im_report_type_indicator]
 		$permission_sql
 	order by 
-		section,
-		report_sort_order
+		section
 " {
     set report_view_url [export_vars -base "view" {indicator_id return_url}]
     set report_edit_url [export_vars -base "new" {indicator_id}]
