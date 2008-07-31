@@ -49,13 +49,24 @@ create table im_indicators (
 	indicator_section_id	integer
 				constraint im_indicator_section_fk
 				references im_categories,
+	-- Restrict the indicator to a specific object type?
+	-- For example, a holiday_days indicator might be only for users.
+	indicator_object_type	varchar(100)
+				constraint im_indicator_otype_fk
+				references acs_object_types,
 
 	-- Lower widget scale
 	indicator_widget_min	double precision,
 	-- Upper widget scale
 	indicator_widget_max	double precision,
 	-- Number of histogram bins between min and max
-	indicator_widget_bins	integer
+	indicator_widget_bins	integer,
+
+	-- Indicator colour. Leave empty to disable
+	indicator_low_warn	double precision,
+	indicator_low_critical	double precision,
+	indicator_high_warn	double precision,
+	indicator_high_critical	double precision,
 );
 
 
@@ -84,6 +95,12 @@ create table im_indicator_results (
 	result			double precision
 				constraint im_indicator_results_result_nn
 				not null,
+				-- Associate a result with a particular object,
+				-- for example a user.
+	result_object_id	integer
+				constraint im_indicator_result_object_fk
+				references acs_objects,
+
 				-- How many companies with this result? 
 				-- 1 for individual results.
 	result_count		integer default 1,
