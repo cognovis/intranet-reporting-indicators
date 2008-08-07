@@ -217,6 +217,10 @@ ad_proc im_indicator_horizontal_bar {
 } {
     # Sanity checks
     if {"" == $value} { return "" }
+
+    if {"" == $widget_min} { set widget_min 0 }
+    if {"" == $widget_max} { set widget_max 10 }
+
     if {$value < $widget_min} { set widget_min $value }
     if {$value > $widget_max} { set widget_max $value }
 
