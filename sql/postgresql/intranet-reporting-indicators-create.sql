@@ -66,7 +66,7 @@ create table im_indicators (
 	indicator_low_warn	double precision,
 	indicator_low_critical	double precision,
 	indicator_high_warn	double precision,
-	indicator_high_critical	double precision,
+	indicator_high_critical	double precision
 );
 
 
