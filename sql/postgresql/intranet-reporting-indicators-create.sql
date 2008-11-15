@@ -332,7 +332,7 @@ select im_component_plugin__new (
 		'/intranet/index',			-- page_url
 		null,					-- view_name
 		50,					-- sort_order
-		'im_timesheet_project_component $user_id $project_id ',
+		'im_indicator_home_page_component',
 		'lang::message::lookup {} intranet-reporting-indicators.Home_Indicator_Component {Home Indicator Component}'
 );
 
