@@ -158,23 +158,6 @@ select inline_0 ();
 drop function inline_0 ();
     
 
-create or replace function inline_0 ()
-returns integer as '
-DECLARE
-	v_id			integer;
-BEGIN
-	v_id := im_indicator__new(
-		null,
-		''im_indicator'',
-		now(),
-		0,
-		'''',
-		null,
-		''External Costs'',
-		''external_costs'',
-
-
-
 -- Update low and high level watermarks
 
 update im_indicators set
