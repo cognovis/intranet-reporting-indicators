@@ -159,10 +159,12 @@ db_multirow -extend {report_view_url edit_html value_html diagram_html help_gif 
 	}
     }
 
-    set value_html "min=$indicator_widget_min, res=$result, max=$indicator_widget_max"
     set value_html $result
 
-    set diagram_html [im_indicator_horizontal_bar \
+    if { "" == $result } {
+	set diagram_html  "&nbsp;&nbsp;[lang::message::lookup "" intranet-reporting-indicator "Query did not return value"] "
+    } else {
+	set diagram_html [im_indicator_horizontal_bar \
 			  -name "test" \
 			  -value $result \
 			  -widget_min $indicator_widget_min \
@@ -172,6 +174,7 @@ db_multirow -extend {report_view_url edit_html value_html diagram_html help_gif 
 			  -widget_max_red $indicator_high_critical \
 			  -widget_max $indicator_widget_max \
 			 ]
+    }
 }
 
 
