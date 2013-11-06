@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="intranet-reporting-indicators" package_version="3.4.0.7.0" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="intranet-reporting-indicators" locale="en_US" charset="ISO-8859-1">
 
+  <msg key="Admin_Indicators">Admin Indicators</msg>
+  <msg key="End_Date">End Date</msg>
+  <msg key="Filter_Indicators">Filter Indicators</msg>
   <msg key="Home_Indicator_Component">Home Indicator Component</msg>
+  <msg key="Object_Type">Object Type</msg>
+  <msg key="Query_did_not_return_any_value">Query did not return any value</msg>
+  <msg key="Start_Date">Start Date</msg>
 </message_catalog>
