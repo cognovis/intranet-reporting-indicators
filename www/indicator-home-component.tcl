@@ -128,6 +128,7 @@ db_multirow -extend {report_view_url edit_html value_html diagram_html help_gif 
 	<a href='$report_edit_url'>[im_gif "wrench"]</a>
 	<a href='$perms_url'>[im_gif "lock"]</a>
     "
+    set report_description [string map {{"} {}} $report_description]
     set help_gif [im_gif help $report_description]
     set indicator_color "black"
 
@@ -162,7 +163,7 @@ db_multirow -extend {report_view_url edit_html value_html diagram_html help_gif 
     set value_html $result
 
     if { "" == $result } {
-	set diagram_html  "&nbsp;&nbsp;[lang::message::lookup "" intranet-reporting-indicator "Query did not return value"] "
+	set diagram_html  "&nbsp;&nbsp;[lang::message::lookup "" intranet-reporting-indicators.Query_did_not_return_any_value "Query did not return any value"] "
     } else {
 	set diagram_html [im_indicator_horizontal_bar \
 			  -name "test" \
