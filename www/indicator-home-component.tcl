@@ -129,7 +129,7 @@ db_multirow -extend {report_view_url edit_html value_html diagram_html help_gif 
 	<a href='$perms_url'>[im_gif "lock"]</a>
     "
     set report_description [string map {{"} {}} $report_description]
-    set help_gif [im_gif help $report_description]
+    set help_gif [im_gif -translate_p 0 help $report_description]
     set indicator_color "black"
 
     if {"" == $result} {

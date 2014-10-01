@@ -477,7 +477,7 @@ ad_proc -public im_indicator_timeline_component {
 	set perms_url [export_vars -base "perms" {{object_id $indicator_id}}]
 	set delete_url [export_vars -base "delete" {indicator_id return_url}]
 	set edit_html "
-		[im_gif "help" [ns_quotehtml $report_description]]<br>
+		[im_gif -translate_p 0 "help" [ns_quotehtml $report_description]]<br>
 		<a href=\"$report_edit_url\">[im_gif "wrench"]</a><br>
 		<a href=\"$perms_url\">[im_gif "lock"]</a><br>
 	<!--	<a href=\"$delete_url\">[im_gif "cancel"]</a> -->
